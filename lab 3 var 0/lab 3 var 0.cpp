@@ -1,9 +1,10 @@
 ﻿#include <iostream>
 #include "archive.h"
+#include "file_archive.h"
 
 using namespace std;
 
-void main() 
+int main(int argc, char *argv[])
 {
 	string t1 = "hhhhhbbbbbdddd";
 	string t2 = "222 huuuu  44";
@@ -28,4 +29,10 @@ void main()
 	cout << d1 << endl;
 	cout << d2 << endl;
 	cout << d3 << endl;
+
+	FileArchive file;
+	file.Compress("/Users/user/Desktop/test/in.txt", "/Users/user/Desktop/test/out.txt");
+
+
+	return 0;
 }

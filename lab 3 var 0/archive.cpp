@@ -32,6 +32,8 @@ void Archive::Compress(const string& fromInfo, string& toInfo)
 	}
 	toInfo += t;
 	toInfo += char(count);
+
+
 }
 void Archive::Decompress(const string& fromInfo, string& toInfo)
 {
