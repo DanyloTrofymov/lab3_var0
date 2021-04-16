@@ -1,38 +1,26 @@
 ﻿#include <iostream>
 #include "archive.h"
 #include "file_archive.h"
+#include <vector>
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main(/*int argc, char* argv[]*/)
 {
-	string t1 = "hhhhhbbbbbdddd";
-	string t2 = "222 huuuu  44";
-	string t3 = "nnmkjjp";
-
-	Archive archive;
-
-	string r1, r2, r3;
-	archive.Compress(t1, r1);
-	archive.Compress(t2, r2);
-	archive.Compress(t3, r3);
-
-	cout << r1 << endl;
-	cout << r2 << endl;
-	cout << r3 << endl;
-
-	string d1, d2, d3;
-	archive.Decompress(r1, d1);
-	archive.Decompress(r2, d2);
-	archive.Decompress(r3, d3);
-
-	cout << d1 << endl;
-	cout << d2 << endl;
-	cout << d3 << endl;
-
 	FileArchive file;
-	file.Compress("/Users/user/Desktop/test/in.txt", "/Users/user/Desktop/test/out.txt");
-
-
+	//Archive archive;
+	//string dich = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+		//"Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nExcepteur sint occaecat cupidatat non proident,\nsunt in culpa qui officia deserunt mollit anim id est laborum.";
+	//string r1, r2;
+	//archive.LZWCompress(dich, r1);
+	//archive.LZWDecompress(r1, r2);
+	//cout << dich << endl;
+	//cout << r1 << endl;
+	//cout << r2 << endl;
+	//cout << archive.ToString(647)<<endl;
+	//cout << archive.FromString(archive.ToString(647))<<endl;
+	//cout << archive.Next(archive.ToString(10000))<<endl;
+	file.Compress("in.txt", "encoded.txt");
+	file.Decompress("encoded.txt", "out.txt");
 	return 0;
 }
