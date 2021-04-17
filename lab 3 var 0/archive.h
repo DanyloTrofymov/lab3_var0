@@ -4,6 +4,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+#include <unordered_map>
+#include <vector>
 
 class LZWArchivator : public IArhivator
 {
