@@ -139,13 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="archivator_factory.cpp" />
     <ClCompile Include="archive.cpp" />
     <ClCompile Include="file_archive.cpp" />
     <ClCompile Include="lab 3 var 0.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="archivator_factory.h" />
     <ClInclude Include="archive.h" />
     <ClInclude Include="file_archive.h" />
+    <ClInclude Include="iarchivator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

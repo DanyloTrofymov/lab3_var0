@@ -24,12 +24,21 @@
     <ClCompile Include="file_archive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="archivator_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="archive.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="file_archive.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iarchivator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="archivator_factory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
