@@ -20,7 +20,6 @@ public:
 protected:
     bool ReadFile(const string& fileName, string& data)             const;
     bool WriteFile(const string& fileName, const string& data)      const;
-
     bool IsEmpty(const string& fileName)                            const;
 
     unique_ptr<IArhivator> archivator;

@@ -17,6 +17,8 @@ bool FileArchive::IsEmpty(const string& fileName) const
     return pFile.peek() == ifstream::traits_type::eof();
 }
 
+
+
 bool FileArchive::Compress(const string &fromInfo, const string &toInfo) const
 {
     string fromData, toData;
@@ -39,25 +41,27 @@ bool FileArchive::Decompress(const string& fromInfo, const string& toInfo) const
 
 bool FileArchive::ReadFile(const string& fileName, string& data) const
 {
-    ifstream inputFile(fileName, ifstream::binary);
-    if (inputFile.is_open())
-    {
-        if (IsEmpty(fileName))
-        {
-            cout << "file "<< fileName << " is empty" << endl;
-            return false;
-        }
-        inputFile.seekg(0, inputFile.end);
-        size_t length = inputFile.tellg();
-        inputFile.seekg(0, inputFile.beg);
-        data.resize(length);
 
-        std::cout << "Reading " << length << " characters... " << endl;
-        // read data as a block:
-        inputFile.read((char*)data.c_str(), length);
-        return true;
+    ifstream inputFile(fileName, ifstream::binary);
+    if(inputFile.good()) {
+        if (inputFile.is_open()) {
+            if (IsEmpty(fileName)) {
+                cout << "file " << fileName << " is empty" << endl;
+                return false;
+            }
+            inputFile.seekg(0, inputFile.end);
+            size_t length = inputFile.tellg();
+            inputFile.seekg(0, inputFile.beg);
+            data.resize(length);
+
+            std::cout << "Reading " << length << " characters... " << endl;
+            // read data as a block:
+            inputFile.read((char *) data.c_str(), length);
+            return true;
+        }
+        // inputFile.close();
     }
-    inputFile.close();
+    cout << "File does not exist" << endl;
     return false;
 }
 

@@ -16,4 +16,5 @@ public:
 
     virtual bool Compress(const string& fromInfo, string& toInfo)   const = 0;
     virtual bool Decompress(const string& fromInfo, string& toInfo) const = 0;
+
 };
