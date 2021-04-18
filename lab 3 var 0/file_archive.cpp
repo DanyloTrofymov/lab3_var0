@@ -59,7 +59,7 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
             inputFile.read((char *) data.c_str(), length);
             return true;
         }
-        // inputFile.close();
+         inputFile.close();
     }
     cout << "File does not exist" << endl;
     return false;
