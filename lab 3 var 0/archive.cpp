@@ -7,21 +7,23 @@ bool LZWArchivator::Compress(const string& fromInfo, string& toInfo) const
 {
     toInfo.clear();
     unordered_map<string, int> vocabulary;
-    for (int i = 0; i <= 255; i++) {
+    for (int i = 0; i <= 255; i++) 
+    {
         vocabulary[{char(i)}] = i;
     }
-
-
     string firstCharacter = "", nextCharacter = "";
     firstCharacter += fromInfo[0];
     int vocabCode = 256;
-    for (int i = 0; i < fromInfo.length(); i++) {
+    for (int i = 0; i < fromInfo.length(); i++) 
+    {
         if (i != fromInfo.length() - 1)
             nextCharacter += fromInfo[i + 1];
-        if (vocabulary.find(firstCharacter + nextCharacter) != vocabulary.end()) {
+        if (vocabulary.find(firstCharacter + nextCharacter) != vocabulary.end()) 
+        {
             firstCharacter = firstCharacter + nextCharacter;
         }
-        else {
+        else 
+        {
             toInfo += ToString(vocabulary[firstCharacter]);
             vocabulary[firstCharacter + nextCharacter] = vocabCode;
             vocabCode++;
@@ -54,7 +56,8 @@ vector<int> LZWArchivator::Parse(string& str) const
 bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
 {
     unordered_map<int, string> vocabulary;
-    for (int i = 0; i <= 255; i++) {
+    for (int i = 0; i <= 255; i++) 
+    {
 
         vocabulary[i] = { char(i) };
     }
@@ -67,13 +70,16 @@ bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
     string c = translatedCharacter;
     toInfo += translatedCharacter;
     int count = 256;
-    for (int i = 0; i < parsed.size() - 1; i++) {
+    for (int i = 0; i < parsed.size() - 1; i++) 
+    {
         nextCodedCharacter = parsed[i + 1];
-        if (vocabulary.find(nextCodedCharacter) == vocabulary.end()) {
+        if (vocabulary.find(nextCodedCharacter) == vocabulary.end()) 
+        {
             translatedCharacter = vocabulary[firstCodedCharacter];
             translatedCharacter = translatedCharacter + c;
         }
-        else {
+        else 
+        {
             translatedCharacter = vocabulary[nextCodedCharacter];
         }
         toInfo += translatedCharacter;
@@ -91,7 +97,6 @@ string LZWArchivator::ToString(int code)			const
 {
     string result;
     int bits = 0;
-    //cout <<"{"<< code <<"}";
     while (code != 0)
     {
         uint_fast8_t v = code % 256;
@@ -102,6 +107,7 @@ string LZWArchivator::ToString(int code)			const
     result = (char)bits + result;
     return result;
 }
+
 int LZWArchivator::FromString(const string& data)	const
 {
     if (data.empty())
@@ -116,7 +122,6 @@ int LZWArchivator::FromString(const string& data)	const
         bits -= 8;
         i++;
     }
-    //cout << "[" << result << "]";
     return result;
 }
 
@@ -138,7 +143,8 @@ int LZWArchivator::Next(const string& data)		const
 
 bool RLEArchivator::Compress(const string& fromInfo, string& toInfo) const
 {
-	if (fromInfo.empty()) {
+	if (fromInfo.empty()) 
+    {
 		return false;
 	}
 	toInfo.clear();
@@ -171,9 +177,11 @@ bool RLEArchivator::Compress(const string& fromInfo, string& toInfo) const
 
     return true;
 }
+
 bool RLEArchivator::Decompress(const string& fromInfo, string& toInfo) const
 {
-	if (fromInfo.empty()) {
+	if (fromInfo.empty()) 
+    {
 		return false;
 	}
 	toInfo.clear();

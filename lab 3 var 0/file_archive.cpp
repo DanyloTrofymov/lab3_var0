@@ -51,9 +51,7 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
         size_t length = inputFile.tellg();
         inputFile.seekg(0, inputFile.beg);
         data.resize(length);
-
-        std::cout << "Reading " << length << " characters... " << endl;
-        // read data as a block:
+        cout << "Reading " << length << " characters... " << endl;
         inputFile.read((char*)data.c_str(), length);
         return true;
     }
