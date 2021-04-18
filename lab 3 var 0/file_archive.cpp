@@ -43,9 +43,12 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
 {
 
     ifstream inputFile(fileName, ifstream::binary);
-    if(inputFile.good()) {
-        if (inputFile.is_open()) {
-            if (IsEmpty(fileName)) {
+    if(inputFile.good()) 
+    {
+        if (inputFile.is_open()) 
+        {
+            if (IsEmpty(fileName)) 
+            {
                 cout << "file " << fileName << " is empty" << endl;
                 return false;
             }
@@ -61,7 +64,7 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
         }
          inputFile.close();
     }
-    cout << "File does not exist" << endl;
+    cout << "File does not exist. Closing the program..." << endl;
     return false;
 }
 
