@@ -16,6 +16,7 @@ public:
 
     bool Compress(const string& fromInfo, const string& toInfo)     const;
     bool Decompress(const string& fromInfo, const string& toInfo)   const;
+
 protected:
     bool ReadFile(const string& fileName, string& data)             const;
     bool WriteFile(const string& fileName, const string& data)      const;

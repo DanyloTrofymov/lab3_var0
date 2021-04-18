@@ -6,30 +6,30 @@ using namespace std;
 bool LZWArchivator::Compress(const string& fromInfo, string& toInfo) const
 {
     toInfo.clear();
-    unordered_map<string, int> table;
+    unordered_map<string, int> vocabulary;
     for (int i = 0; i <= 255; i++) {
-        table[{char(i)}] = i;
+        vocabulary[{char(i)}] = i;
     }
 
-    string p = "", c = "";
-    p += fromInfo[0];
-    int code = 256;
+
+    string firstCharacter = "", nextCharacter = "";
+    firstCharacter += fromInfo[0];
+    int vocabCode = 256;
     for (int i = 0; i < fromInfo.length(); i++) {
         if (i != fromInfo.length() - 1)
-            c += fromInfo[i + 1];
-        if (table.find(p + c) != table.end()) {
-            p = p + c;
+            nextCharacter += fromInfo[i + 1];
+        if (vocabulary.find(firstCharacter + nextCharacter) != vocabulary.end()) {
+            firstCharacter = firstCharacter + nextCharacter;
         }
         else {
-            //cheat! need refac it
-            toInfo += ToString(table[p]);
-            table[p + c] = code;
-            code++;
-            p = c;
+            toInfo += ToString(vocabulary[firstCharacter]);
+            vocabulary[firstCharacter + nextCharacter] = vocabCode;
+            vocabCode++;
+            firstCharacter = nextCharacter;
         }
-        c = "";
+        nextCharacter = "";
     }
-    toInfo += ToString(table[p]);
+    toInfo += ToString(vocabulary[firstCharacter]);
     return true;
 }
 
@@ -53,68 +53,35 @@ vector<int> LZWArchivator::Parse(string& str) const
 
 bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
 {
-    /*
-    cout << "\nDecoding\n";
-    unordered_map<int, string> table;
-    for (int i = 0; i <= 255; i++) {
-        string ch = "";
-        ch += char(i);
-        table[i] = ch;
-    }
-    string fromInfo_t = fromInfo;
-    vector<int> op = Parse(fromInfo_t);
-    int old = op[0], n;
-    string s = table[old];
-    string c = "";
-    c += s[0];
-    cout << s;
-    int count = 256;
-    for (int i = 0; i < op.size() - 1; i++) {
-        n = op[i + 1];
-        if (table.find(n) == table.end()) {
-            s = table[old];
-            s = s + c;
-        }
-        else {
-            s = table[n];
-        }
-        cout << s;
-        c = "";
-        c += s[0];
-        table[count] = table[old] + c;
-        count++;
-        old = n;
-    }
-    */
-    unordered_map<int, string> table;
+    unordered_map<int, string> vocabulary;
     for (int i = 0; i <= 255; i++) {
 
-        table[i] = { char(i) };
+        vocabulary[i] = { char(i) };
     }
     string fromInfo_t = fromInfo;
     vector<int> parsed = Parse(fromInfo_t);
 
-    int old = parsed[0];
-    int n;
-    string s = table[old];
-    string c = s;
-    toInfo += s;
+    int firstCodedCharacter = parsed[0];
+    int nextCodedCharacter;
+    string translatedCharacter = vocabulary[firstCodedCharacter];
+    string c = translatedCharacter;
+    toInfo += translatedCharacter;
     int count = 256;
     for (int i = 0; i < parsed.size() - 1; i++) {
-        n = parsed[i + 1];
-        if (table.find(n) == table.end()) {
-            s = table[old];
-            s = s + c;
+        nextCodedCharacter = parsed[i + 1];
+        if (vocabulary.find(nextCodedCharacter) == vocabulary.end()) {
+            translatedCharacter = vocabulary[firstCodedCharacter];
+            translatedCharacter = translatedCharacter + c;
         }
         else {
-            s = table[n];
+            translatedCharacter = vocabulary[nextCodedCharacter];
         }
-        toInfo += s;
+        toInfo += translatedCharacter;
         c = "";
-        c += s[0];
-        table[count] = table[old] + c;
+        c += translatedCharacter[0];
+        vocabulary[count] = vocabulary[firstCodedCharacter] + c;
         count++;
-        old = n;
+        firstCodedCharacter = nextCodedCharacter;
     }
     return true;
 }

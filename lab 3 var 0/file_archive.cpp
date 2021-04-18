@@ -64,7 +64,7 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
 bool FileArchive::WriteFile(const string& fileName, const string& data)  const
 {
     ofstream outputFile;
-    outputFile.open(fileName, ofstream::binary);//, ofstream::out | ofstream::trunc);
+    outputFile.open(fileName, ofstream::binary);
     if (outputFile.is_open())
     {
         outputFile.write(data.c_str(), data.length());
