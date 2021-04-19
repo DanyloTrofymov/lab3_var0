@@ -4,7 +4,13 @@ using namespace std;
 
 void LZWArchivator::encodeName(const string& fileName, string& toInfo) const
 {
-    toInfo += "???" + fileName + "???";
+    string fileName_t = fileName;
+    int pos = fileName_t.find_last_of('/');
+    if (pos == UINT_MAX) {
+        pos = 0;
+    }
+    string name = fileName_t.substr(pos+1);
+    toInfo += "???" + name + "???";
 }
 
 string LZWArchivator::decodeName(string& fromInfo) const
