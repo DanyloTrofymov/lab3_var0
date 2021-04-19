@@ -2,10 +2,28 @@
 
 using namespace std;
 
-
-bool LZWArchivator::Compress(const string& fromInfo, string& toInfo) const
+void LZWArchivator::encodeName(const string& fileName, string& toInfo) const
 {
-    toInfo.clear();
+    toInfo += "???" + fileName + "???";
+}
+
+string LZWArchivator::decodeName(string& fromInfo) const
+{
+    string code = "???";
+    string name;
+    int pos = fromInfo.find_first_of(code);
+    fromInfo.erase(pos, 3);
+    pos = fromInfo.find_first_of(code);
+    name = fromInfo.substr(0, pos);
+    fromInfo.erase(0, name.size()+3);
+    return name;
+}
+
+
+bool LZWArchivator::Compress(const string& fromInfo, string& toInfo, string& fileName) const
+{
+    encodeName(fileName, toInfo);
+
     unordered_map<string, int> vocabulary;
     for (int i = 0; i <= 255; i++) 
     {
@@ -55,13 +73,16 @@ vector<int> LZWArchivator::Parse(string& str) const
 
 bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
 {
+
+    string fromInfo_t = fromInfo;
+
     unordered_map<int, string> vocabulary;
     for (int i = 0; i <= 255; i++) 
     {
 
         vocabulary[i] = { char(i) };
     }
-    string fromInfo_t = fromInfo;
+
     vector<int> parsed = Parse(fromInfo_t);
 
     int firstCodedCharacter = parsed[0];
@@ -91,7 +112,6 @@ bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
     }
     return true;
 }
-
 
 string LZWArchivator::ToString(int code)			const
 {
@@ -141,7 +161,7 @@ int LZWArchivator::Next(const string& data)		const
     return result;
 }
 
-bool RLEArchivator::Compress(const string& fromInfo, string& toInfo) const
+bool RLEArchivator::Compress(const string& fromInfo, string& toInfo, string& fileName) const
 {
 	if (fromInfo.empty()) 
     {

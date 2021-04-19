@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <unordered_map>
-#include <vector>
+#include <string>
 
 class LZWArchivator : public IArhivator
 {
@@ -18,14 +18,16 @@ public:
 	LZWArchivator& operator=(const LZWArchivator& _archive)		= default;
 	LZWArchivator& operator=(LZWArchivator&& _archive)			= default;
 	
-	virtual bool Compress(const string& fromInfo, string& toInfo)	const override;
-	virtual bool Decompress(const string& fromInfo, string& toInfo)	const override;
-	
+	virtual bool Compress(const string& fromInfo, string& toInfo, string& fileName)	const override;
+	virtual bool Decompress(const string& fromInfo, string& toInfo)					const override;
+	string decodeName(string& fromInfo)										const;
+
 protected:
-	vector<int> Parse(string& str)		const;
-	string ToString(int code)			const;
-	int FromString(const string& data)	const;
-	int Next(const string& data)		const;
+	void encodeName(const string& fileName, string& toInfo) const;
+	vector<int> Parse(string& str)							const;
+	string ToString(int code)								const;
+	int FromString(const string& data)						const;
+	int Next(const string& data)							const;
 
 };
 
@@ -40,6 +42,6 @@ public:
 	RLEArchivator& operator= (const RLEArchivator& _archive)	= default;
 	RLEArchivator& operator= (RLEArchivator&& _archive)			= default;
 
-	virtual bool Compress(const string& fromInfo, string& toInfo)	const override;
-	virtual bool Decompress(const string& fromInfo, string& toInfo)	const override;
+	virtual bool Compress(const string& fromInfo, string& toInfo, string& fileName)	const override;
+	virtual bool Decompress(const string& fromInfo, string& toInfo)				const override;
 };

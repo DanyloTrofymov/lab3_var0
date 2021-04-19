@@ -13,10 +13,14 @@ int main(int argc, char* argv[])
         string action = argv[1];
         string inputFile = argv[2];
         string outputFile = argv[3];
+        
+        /*string action = "--decompress";
+        string inputFile = "1234.bin";
+        string outputFile = "123.txt";*/
+
         if (
             ((action == "--compress") || (action == "--decompress"))
             && !inputFile.empty()
-            && !outputFile.empty()
             )
         {
             string archivatorType;

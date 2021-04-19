@@ -14,7 +14,6 @@ public:
     IArhivator& operator= (const IArhivator& archive)               = default;
     IArhivator& operator= (IArhivator&& archive)                    = default;
 
-    virtual bool Compress(const string& fromInfo, string& toInfo)   const = 0;
-    virtual bool Decompress(const string& fromInfo, string& toInfo) const = 0;
-
+    virtual bool Compress(const string& fromInfo, string& toInfo, string& fileName)   const = 0;
+    virtual bool Decompress(const string& fromInfo, string& toInfo)                   const = 0;
 };

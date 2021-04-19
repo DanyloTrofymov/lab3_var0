@@ -15,7 +15,7 @@ public:
     FileArchive& operator= (FileArchive&& archive)                  = delete;
 
     bool Compress(const string& fromInfo, const string& toInfo)     const;
-    bool Decompress(const string& fromInfo, const string& toInfo)   const;
+    bool Decompress(const string& fromInfo, string& toInfo)         const;
 
 protected:
     bool ReadFile(const string& fileName, string& data)             const;

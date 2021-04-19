@@ -22,18 +22,21 @@ bool FileArchive::IsEmpty(const string& fileName) const
 bool FileArchive::Compress(const string &fromInfo, const string &toInfo) const
 {
     string fromData, toData;
+    string fromInfo_t = fromInfo;
     if (ReadFile(fromInfo, fromData))
     {
-        return archivator->Compress(fromData, toData) && WriteFile(toInfo, toData);
+        return archivator->Compress(fromData, toData, fromInfo_t) && WriteFile(toInfo, toData);
     }
     return false;
 }
 
-bool FileArchive::Decompress(const string& fromInfo, const string& toInfo) const
+bool FileArchive::Decompress(const string& fromInfo, string& toInfo) const
 {
     string fromData, toData;
+    LZWArchivator lzw;
     if (ReadFile(fromInfo, fromData))
     {
+        toInfo = lzw.decodeName(fromData);
         return archivator->Decompress(fromData, toData) && WriteFile(toInfo, toData);
     }
     return false;
