@@ -11,13 +11,17 @@ FileArchive::FileArchive(ArchivatorFactory::ArchivatorType type)
 : archivator(ArchivatorFactory::Get(type))
 {}
 
+string FileName(const string& filename){
+    return filename;
+}
+int FileNameSize(const string& filename){
+    return filename.length();
+}
 bool FileArchive::IsEmpty(const string& fileName) const
 {
     ifstream pFile(fileName);
     return pFile.peek() == ifstream::traits_type::eof();
 }
-
-
 
 bool FileArchive::Compress(const string &fromInfo, const string &toInfo) const
 {
@@ -34,6 +38,9 @@ bool FileArchive::Decompress(const string& fromInfo, const string& toInfo) const
     string fromData, toData;
     if (ReadFile(fromInfo, fromData))
     {
+        if(fromData.substr(0, 2) == to_string(FileNameSize(fromInfo))){
+            fromData.erase(0,2 + FileNameSize(fromInfo));
+        }
         return archivator->Decompress(fromData, toData) && WriteFile(toInfo, toData);
     }
     return false;
@@ -42,6 +49,7 @@ bool FileArchive::Decompress(const string& fromInfo, const string& toInfo) const
 bool FileArchive::ReadFile(const string& fileName, string& data) const
 {
 
+int fileNameSkip = fileName.length()+2;
     ifstream inputFile(fileName, ifstream::binary);
     if(inputFile.good()) 
     {
@@ -52,10 +60,12 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
                 cout << "file " << fileName << " is empty" << endl;
                 return false;
             }
+
             inputFile.seekg(0, inputFile.end);
             size_t length = inputFile.tellg();
             inputFile.seekg(0, inputFile.beg);
             data.resize(length);
+
 
             std::cout << "Reading " << length << " characters... " << endl;
             // read data as a block:
@@ -68,8 +78,10 @@ bool FileArchive::ReadFile(const string& fileName, string& data) const
     return false;
 }
 
-bool FileArchive::WriteFile(const string& fileName, const string& data)  const
+bool FileArchive::WriteFile(const string& fileName,  string& data)  const
 {
+    const string fname = FileNameRecord(fileName);
+    data = to_string(FileNameSize(fname)) + fname + data;
     ofstream outputFile;
     outputFile.open(fileName, ofstream::binary);
     if (outputFile.is_open())

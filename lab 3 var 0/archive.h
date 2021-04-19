@@ -27,6 +27,7 @@ protected:
 	int FromString(const string& data)	const;
 	int Next(const string& data)		const;
 
+
 };
 
 class RLEArchivator : public IArhivator

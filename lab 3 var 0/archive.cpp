@@ -55,6 +55,7 @@ vector<int> LZWArchivator::Parse(string& str) const
 
 bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
 {
+
     unordered_map<int, string> vocabulary;
     for (int i = 0; i <= 255; i++) 
     {
@@ -62,6 +63,7 @@ bool LZWArchivator::Decompress(const string& fromInfo, string& toInfo) const
         vocabulary[i] = { char(i) };
     }
     string fromInfo_t = fromInfo;
+
     vector<int> parsed = Parse(fromInfo_t);
 
     int firstCodedCharacter = parsed[0];
